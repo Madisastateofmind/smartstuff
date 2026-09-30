@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Live World Time & Your Local Time</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #1a202c;
+    color: #edf2f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .container {
+    background-color: #2d3748;
+    border-radius: 12px;
+    padding: 30px 40px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.7);
+    width: 350px;
+    text-align: center;
+  }
+  h1 {
+    margin-bottom: 25px;
+    font-size: 24px;
+  }
+  .clock {
+    margin-bottom: 20px;
+  }
+  .label {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #A1DAFF;
+  }
+  .time {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+  .time .date {
+    display: block;
+    font-size: 12px;
+    color: #9BB2C4;
+  }
+  .timezone-note {
+    font-size: 11px;
+    line-height: 1.35;
+    margin-top: 8px;
+  }
+  select {
+    width: auto;
+    max-width: 100%;
+    display: block;
+    padding: 6px;
+    border-radius: 6px;
+    font-size: 12px;
+    margin: 5px auto 10px;
+    background-color: #1a202c;
+    color: #d9edff;
+    border: 1px solid rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+    color-scheme: dark;
+    text-shadow: -1px 0 #1a202c, 1px 0 #1a202c, 0 -1px #1a202c, 0 1px #1a202c;
+  }
+  select option {
+    background-color: #1a202c;
+    color: #d9edff;
+    text-shadow: -1px 0 #1a202c, 1px 0 #1a202c, 0 -1px #1a202c, 0 1px #1a202c;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>⏰ Live Time Comparison</h1>
+
+  <div class="clock">
+    <div class="label">🇬🇧 England (GMT/BST)</div>
+    <div class="time" id="englandTime"><span class="clock-time">Loading...</span><span class="date"></span></div>
+  </div>
+
+  <div class="clock">
+    <div class="label">🇺🇸 Eastern (EST/EDT)</div>
+    <div class="time" id="easternTime"><span class="clock-time">Loading...</span><span class="date"></span></div>
+  </div>
+
+  <div class="clock">
+    <div class="label">🇺🇸 Pacific (PST/PDT)</div>
+    <div class="time" id="pacificTime"><span class="clock-time">Loading...</span><span class="date"></span></div>
+  </div>
+
+  <div class="clock">
+    <label class="label" for="timeZoneSelect">🌐 Choose a UTC offset</label>
+    <select id="timeZoneSelect">
+      <option value="-12">-12 UTC - USA/Baker Island</option>
+      <option value="-11">-11 SST - American Samoa/Pago Pago</option>
+      <option value="-10">-10 HST - USA/Honolulu</option>
+      <option value="-9">-9 AKST - USA/Anchorage</option>
+      <option value="-8">-8 PST - USA/Los Angeles</option>
+      <option value="-7">-7 MST - USA/Denver</option>
+      <option value="-6">-6 CST - USA/Chicago</option>
+      <option value="-5">-5 EST - USA/New York, Canada/Toronto</option>
+      <option value="-4">-4 AST - Canada/Halifax</option>
+      <option value="-3">-3 BRT - Brazil/São Paulo</option>
+      <option value="-2">-2 FNT - Brazil/Fernando de Noronha</option>
+      <option value="-1">-1 AZOT - Portugal/Azores</option>
+      <option value="0" selected>+0 GMT - Europe/England</option>
+      <option value="1">+1 CET - France/Paris</option>
+      <option value="2">+2 SAST - South Africa/Johannesburg</option>
+      <option value="3">+3 TRT - Türkiye/Istanbul</option>
+      <option value="4">+4 GST - UAE/Dubai</option>
+      <option value="5">+5 PKT - Pakistan/Karachi</option>
+      <option value="6">+6 BST - Bangladesh/Dhaka</option>
+      <option value="7">+7 ICT - Thailand/Bangkok</option>
+      <option value="8">+8 SGT - Singapore</option>
+      <option value="9">+9 JST - Japan/Tokyo</option>
+      <option value="10">+10 AEST - Australia/Brisbane</option>
+      <option value="11">+11 SBT - Solomon Islands/Honiara</option>
+      <option value="12">+12 FJT - Fiji/Suva</option>
+      <option value="13">+13 TOT - Tonga/Nukuʻalofa</option>
+      <option value="14">+14 LINT - Kiribati/Kiritimati</option>
+    </select>
+    <div class="time" id="selectedTime"><span class="clock-time">Loading...</span><span class="date"></span></div>
+    <div class="timezone-note">Fixed standard-time offsets. <br>Some places shift one hour for daylight saving time.</div>
+  </div>
+
+  <div class="clock">
+    <div class="label">🌍 Your Local Time</div>
+    <div class="time" id="localTime"><span class="clock-time">Loading...</span><span class="date"></span></div>
+  </div>
+</div>
+
+<script>
+function formatClock(date, timeZone, fixedOffset) {
+  const zone = timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const time = date.toLocaleTimeString("en-US", {
+    timeZone: zone,
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true
+  });
+  const day = date.toLocaleDateString("en-US", {
+    timeZone: zone,
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+  const offsetName = fixedOffset === undefined
+    ? new Intl.DateTimeFormat("en-US", { timeZone: zone, timeZoneName: "shortOffset" })
+        .formatToParts(date).find(part => part.type === "timeZoneName").value
+    : `GMT${fixedOffset >= 0 ? "+" : ""}${fixedOffset}`;
+  const offset = offsetName === "GMT" ? "GMT+0" : offsetName;
+  return { time: `${offset} ${time}`, date: day };
+}
+
+function showClock(id, clock) {
+  const element = document.getElementById(id);
+  element.querySelector(".clock-time").textContent = clock.time;
+  element.querySelector(".date").textContent = clock.date;
+}
+
+function updateClocks() {
+  const now = new Date();
+
+  showClock("englandTime", formatClock(now, "Europe/London"));
+  showClock("easternTime", formatClock(now, "America/New_York"));
+  showClock("pacificTime", formatClock(now, "America/Los_Angeles"));
+  const selectedOffset = Number(document.getElementById("timeZoneSelect").value);
+  showClock("selectedTime", formatClock(
+    new Date(now.getTime() + selectedOffset * 3600000), "Etc/UTC", selectedOffset
+  ));
+  showClock("localTime", formatClock(now));
+}
+
+document.getElementById("timeZoneSelect").value = "0";
+updateClocks();
+setInterval(updateClocks, 1000);
+</script>
+
+</body>
+</html>
