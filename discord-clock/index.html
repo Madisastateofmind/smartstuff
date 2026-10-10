@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>World Time Together</title>
+<title>World Clock Together</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -79,11 +79,40 @@
   @media (max-width: 480px) {
     .container { padding: 24px 16px; }
   }
+
+  :root { --view-scale: 1; }
+  .container {
+    width: calc(430px * var(--view-scale));
+    padding: calc(30px * var(--view-scale)) calc(40px * var(--view-scale));
+    overflow-wrap: anywhere;
+  }
+  h1 { font-size: calc(24px * var(--view-scale)); margin-bottom: calc(25px * var(--view-scale)); }
+  .clock { margin-bottom: calc(20px * var(--view-scale)); }
+  .label { font-size: calc(18px * var(--view-scale)); margin-bottom: calc(8px * var(--view-scale)); }
+  .time { font-size: calc(18px * var(--view-scale)); }
+  .time .date { font-size: calc(12px * var(--view-scale)); }
+  .timezone-note { font-size: calc(11px * var(--view-scale)); }
+  select { font-size: calc(12px * var(--view-scale)); padding: calc(6px * var(--view-scale)); }
+  .view-controls { display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:20px; }
+  .view-controls button { min-width:44px; min-height:44px; padding:6px 12px; border:1px solid #a1daff66; border-radius:8px; background:linear-gradient(100deg,#124493,#08736b,#068a32); color:#fff; font: bold 18px Arial,sans-serif; cursor:pointer; }
+  .view-controls button:disabled { opacity:.45; cursor:default; }
+  .view-controls button:focus-visible { outline:3px solid #a1daff; outline-offset:3px; }
+  #viewPercent { min-width:62px; font-size:16px; }
+  @media (max-width:480px) {
+    .container { padding:calc(24px * var(--view-scale)) calc(16px * var(--view-scale)); }
+  }
+
 </style>
 </head>
 <body>
 
 <div class="container">
+  <div class="view-controls" role="group" aria-label="Clock view size">
+    <button type="button" id="viewSmaller" aria-label="Make clock view smaller">−</button>
+    <output id="viewPercent" aria-live="polite" aria-label="Clock view size">100%</output>
+    <button type="button" id="viewLarger" aria-label="Make clock view larger">+</button>
+    <button type="button" id="viewReset" aria-label="Reset clock view to 100 percent">Reset</button>
+  </div>
   <h1>⏰ Live Time Comparison</h1>
 
   <div class="clock">
@@ -143,6 +172,20 @@
 </div>
 
 <script>
+
+let viewPercent = 100;
+function setViewSize(percent) {
+  viewPercent = Math.max(50, Math.min(150, percent));
+  document.documentElement.style.setProperty("--view-scale", viewPercent / 100);
+  document.getElementById("viewPercent").textContent = viewPercent + "%";
+  document.getElementById("viewSmaller").disabled = viewPercent === 50;
+  document.getElementById("viewLarger").disabled = viewPercent === 150;
+}
+document.getElementById("viewSmaller").addEventListener("click", () => setViewSize(viewPercent - 25));
+document.getElementById("viewLarger").addEventListener("click", () => setViewSize(viewPercent + 25));
+document.getElementById("viewReset").addEventListener("click", () => setViewSize(100));
+setViewSize(100);
+
 function formatClock(date, timeZone, fixedOffset) {
   const zone = timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone;
   const time = date.toLocaleTimeString("en-US", {
