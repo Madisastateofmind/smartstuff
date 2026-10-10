@@ -9,6 +9,18 @@
 :root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#1a202c;color:#edf2f7;font:18px/1.7 Arial,sans-serif}main{max-width:900px;margin:40px auto;padding:40px;background:#2d3748;border-radius:16px;box-shadow:0 8px 30px #0004}h1{font-size:clamp(32px,6vw,48px);line-height:1.15;margin:0 0 18px}h2{font-size:clamp(25px,4vw,32px);line-height:1.3;color:#a1daff;margin:42px 0 16px}h3{font-size:23px;line-height:1.4;margin:28px 0 12px}a{color:#a1daff;text-underline-offset:4px}li{padding-left:5px;margin-bottom:14px}ol{padding-left:26px}.intro{font-size:21px;color:#c9deee}.note{background:#1a202c;border-left:4px solid #a1daff;padding:16px 20px;border-radius:6px}code{background:#1a202c;padding:2px 6px;border-radius:4px}footer{border-top:1px solid #edf2f730;margin-top:40px;padding-top:22px;font-size:15px}nav{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}nav a{display:inline-block;background:#1a202c;border:1px solid #a1daff55;border-radius:8px;padding:9px 15px;text-decoration:none}a:focus-visible{outline:3px solid #a1daff;outline-offset:4px}@media(max-width:600px){main{margin:12px;padding:24px 20px}body{font-size:17px}}
 .discord-button{display:inline-block;background:#5865f2;color:#fff;padding:12px 22px;border-radius:10px;font-weight:bold;text-decoration:none}.discord-button:hover{background:#4752c4}
 nav a,.discord-button{background:linear-gradient(100deg,#124493 0%,#08736b 52%,#068a32 100%);color:#fff;border:1px solid #85dbce66;box-shadow:0 3px 10px #0003;transition:filter .18s ease,box-shadow .18s ease}nav a:hover,.discord-button:hover{background:linear-gradient(100deg,#124493 0%,#08736b 52%,#068a32 100%);filter:brightness(1.12);box-shadow:0 4px 14px #0005}@media(prefers-reduced-motion:reduce){nav a,.discord-button{transition:none}}
+
+.screenshot-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;margin:24px 0}
+.screenshot-gallery[hidden],.screenshot-gallery figure[hidden]{display:none}
+.screenshot-gallery figure{margin:0}
+.screenshot-gallery a{display:block;border:1px solid #a1daff66;border-radius:8px;padding:8px;background:#1a202c}
+.screenshot-gallery img{display:block;width:100%;height:180px;object-fit:contain}
+.screenshot-gallery figcaption{font-size:13px;line-height:1.5;color:#c9deee;margin-top:8px}
+#screenshotPopup{max-width:95vw;max-height:95dvh;padding:16px;background:#1a202c;color:#edf2f7;border:1px solid #a1daff66;border-radius:12px}
+#screenshotPopup::backdrop{background:#000c}
+#screenshotPopup img{display:block;max-width:85vw;max-height:75dvh;object-fit:contain;margin:auto}
+#screenshotPopup button{display:block;margin:0 0 12px auto;padding:8px 14px;border:1px solid #a1daff66;border-radius:8px;background:#2d3748;color:#fff;cursor:pointer}
+#screenshotPopup p{font-size:14px;margin:12px 0 0}
 </style>
 </head>
 <body><main>
@@ -32,6 +44,14 @@ nav a,.discord-button{background:linear-gradient(100deg,#124493 0%,#08736b 52%,#
 <p>The app remains installed when an Activity session ends. Launch it again through the App Launcher, or use <strong>Play</strong> on its invitation card if Discord offers it. You do not need to install the app again.</p>
 <h3>Keep the clock visible on desktop</h3>
 <p>After launching the clock, use Discord’s <strong>Pop Out</strong> option in the Activity view to keep it in a separate floating window while you browse other channels. Resize the window to suit you; the clock automatically adjusts to the available space.</p>
+<p>If Discord shows a <strong>Reload Activity</strong> confirmation when you pop it out, choose <strong>Reload</strong> to continue. Reloading may reset your selected UTC offset and view size.</p>
+
+<div class="screenshot-gallery" aria-label="Desktop pop-out screenshots" hidden>
+  <figure hidden><a href="images/pop-out-button.png" aria-label="Enlarge screenshot: find the Pop Out button"><img src="images/pop-out-button.png" alt="Discord Activity view with the bottom-right Pop Out button circled." loading="lazy"></a><figcaption><strong>1. Find Pop Out.</strong><br>Click the thumbnail to open a larger image in a popup.</figcaption></figure>
+  <figure hidden><a href="images/pop-out-reload.png" aria-label="Enlarge screenshot: confirm Reload"><img src="images/pop-out-reload.png" alt="Discord Reload Activity confirmation, with an arrow pointing to Reload." loading="lazy"></a><figcaption><strong>2. Confirm if prompted.</strong><br>Click the thumbnail to open a larger image in a popup.</figcaption></figure>
+  <figure hidden><a href="images/pop-out-clock.png" aria-label="Enlarge screenshot: clock in its own window"><img src="images/pop-out-clock.png" alt="World Clock Together running in a separate desktop window over the Discord chat." loading="lazy"></a><figcaption><strong>3. Keep the clock nearby.</strong><br>Click the thumbnail to open a larger image in a popup.</figcaption></figure>
+</div>
+
 <p>Use the clock’s <strong>− and + buttons</strong> to adjust its content size from <strong>10% to 500%</strong>. <strong>100%</strong> is the automatic fit, and <strong>Reset</strong> returns to it. Enlarged views may need scrolling.</p>
 <p class="note"><strong>Desktop tip:</strong> This pop-out option has been tested on computer. Mobile availability and behaviour are still being checked.</p>
 <p>The floating window keeps an open Activity handy; it does not make the clock a permanently running participant in a channel. If the session ends, launch the clock again.</p>
@@ -39,4 +59,42 @@ nav a,.discord-button{background:linear-gradient(100deg,#124493 0%,#08736b 52%,#
 <p>For questions, setup help, or feedback, <a href="https://discord.gg/mjqpkPQP8N">join the Madworld support server on Discord</a>.</p>
 <p>You can <a href="https://discord.com/users/144178216423260162">contact me on Discord</a>. Profile links and direct messages may not work if we are not friends or do not share a server. You can try a friend request to <strong>madhatter1295</strong>, or <a href="https://github.com/Madisastateofmind/smartstuff/issues">report an issue on GitHub</a>. Please do not post sensitive information in public issues.</p>
 <footer><a href="index.html">Open the web clock</a> · <a href="../index.html">Smart Stuff index</a> · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a></footer>
-</main></body></html>
+</main>
+<dialog id="screenshotPopup" aria-label="Enlarged guide screenshot">
+<button type="button" id="closeScreenshot">Close ✕</button>
+<img id="largeScreenshot" alt="">
+<p id="screenshotCaption"></p>
+</dialog>
+<script>
+const gallery = document.querySelector(".screenshot-gallery");
+const popup = document.getElementById("screenshotPopup");
+for (const thumbnail of gallery.querySelectorAll("img")) {
+  const reveal = () => {
+    if (thumbnail.naturalWidth > 0) {
+      thumbnail.closest("figure").hidden = false;
+      gallery.hidden = false;
+    }
+  };
+  thumbnail.addEventListener("load", reveal);
+  // Load even while the gallery is hidden.
+  thumbnail.loading = "eager";
+  if (thumbnail.complete) reveal();
+}
+for (const link of gallery.querySelectorAll("a")) {
+  link.addEventListener("click", event => {
+    if (typeof popup.showModal !== "function") return;
+    event.preventDefault();
+    const thumbnail = link.querySelector("img");
+    const large = document.getElementById("largeScreenshot");
+    large.src = link.href;
+    large.alt = thumbnail.alt;
+    document.getElementById("screenshotCaption").textContent = link.closest("figure").querySelector("strong").textContent;
+    popup.showModal();
+  });
+}
+document.getElementById("closeScreenshot").addEventListener("click", () => popup.close());
+popup.addEventListener("click", event => {
+  if (event.target === popup) popup.close();
+});
+</script>
+</body></html>
