@@ -93,7 +93,7 @@
   .time .date { font-size: calc(12px * var(--view-scale)); }
   .timezone-note { font-size: calc(11px * var(--view-scale)); }
   select { font-size: calc(12px * var(--view-scale)); padding: calc(6px * var(--view-scale)); }
-  .view-controls { display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:20px; }
+  .view-controls { display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
   .view-controls button { min-width:44px; min-height:44px; padding:6px 12px; border:1px solid #a1daff66; border-radius:8px; background:linear-gradient(100deg,#124493,#08736b,#068a32); color:#fff; font: bold 18px Arial,sans-serif; cursor:pointer; }
   .view-controls button:disabled { opacity:.45; cursor:default; }
   .view-controls button:focus-visible { outline:3px solid #a1daff; outline-offset:3px; }
@@ -107,11 +107,11 @@
 <body>
 
 <div class="container">
-  <div class="view-controls" role="group" aria-label="Clock view size">
+  <div class="view-controls" role="group" aria-label="Clock view size relative to automatic fit">
     <button type="button" id="viewSmaller" aria-label="Make clock view smaller">−</button>
-    <output id="viewPercent" aria-live="polite" aria-label="Clock view size">100%</output>
+    <output id="viewPercent" aria-live="polite" aria-label="Clock view size relative to automatic fit" title="100% automatically fits the window; − and + adjust that size">100%</output>
     <button type="button" id="viewLarger" aria-label="Make clock view larger">+</button>
-    <button type="button" id="viewReset" aria-label="Reset clock view to 100 percent">Reset</button>
+    <button type="button" id="viewReset" aria-label="Reset clock view to automatic fit at 100 percent">Reset</button>
   </div>
   <h1>⏰ Live Time Comparison</h1>
 
@@ -174,16 +174,42 @@
 <script>
 
 let viewPercent = 100;
+function fitClockView() {
+  const container = document.querySelector(".container");
+  const controls = document.querySelector(".view-controls");
+  // Measure the natural clock size, then fit it to this Activity's viewport.
+  // These temporary styles are restored before the browser paints.
+  document.documentElement.style.setProperty("--view-scale", 1);
+  container.style.maxWidth = "none";
+  container.style.width = "430px";
+  const naturalHeight = container.offsetHeight;
+  const fixedHeight = controls.offsetHeight + 20;
+  container.style.removeProperty("max-width");
+  container.style.removeProperty("width");
+  const availableWidth = Math.max(1, window.innerWidth - 32);
+  const availableHeight = Math.max(1, window.innerHeight - 32);
+  const autoScale = Math.max(0.5, Math.min(
+    1,
+    availableWidth / 430,
+    (availableHeight - fixedHeight) / Math.max(1, naturalHeight - fixedHeight)
+  ));
+  document.documentElement.style.setProperty("--view-scale", autoScale * viewPercent / 100);
+}
 function setViewSize(percent) {
   viewPercent = Math.max(50, Math.min(150, percent));
-  document.documentElement.style.setProperty("--view-scale", viewPercent / 100);
   document.getElementById("viewPercent").textContent = viewPercent + "%";
   document.getElementById("viewSmaller").disabled = viewPercent === 50;
   document.getElementById("viewLarger").disabled = viewPercent === 150;
+  fitClockView();
 }
 document.getElementById("viewSmaller").addEventListener("click", () => setViewSize(viewPercent - 25));
 document.getElementById("viewLarger").addEventListener("click", () => setViewSize(viewPercent + 25));
 document.getElementById("viewReset").addEventListener("click", () => setViewSize(100));
+let resizeFrame;
+window.addEventListener("resize", () => {
+  cancelAnimationFrame(resizeFrame);
+  resizeFrame = requestAnimationFrame(fitClockView);
+});
 setViewSize(100);
 
 function formatClock(date, timeZone, fixedOffset) {
