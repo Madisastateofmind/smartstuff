@@ -196,14 +196,14 @@ function fitClockView() {
   document.documentElement.style.setProperty("--view-scale", autoScale * viewPercent / 100);
 }
 function setViewSize(percent) {
-  viewPercent = Math.max(50, Math.min(150, percent));
+  viewPercent = Math.max(10, Math.min(500, percent));
   document.getElementById("viewPercent").textContent = viewPercent + "%";
-  document.getElementById("viewSmaller").disabled = viewPercent === 50;
-  document.getElementById("viewLarger").disabled = viewPercent === 150;
+  document.getElementById("viewSmaller").disabled = viewPercent === 10;
+  document.getElementById("viewLarger").disabled = viewPercent === 500;
   fitClockView();
 }
-document.getElementById("viewSmaller").addEventListener("click", () => setViewSize(viewPercent - 25));
-document.getElementById("viewLarger").addEventListener("click", () => setViewSize(viewPercent + 25));
+document.getElementById("viewSmaller").addEventListener("click", () => setViewSize(viewPercent - (viewPercent <= 50 ? 10 : 25)));
+document.getElementById("viewLarger").addEventListener("click", () => setViewSize(viewPercent + (viewPercent < 50 ? 10 : 25)));
 document.getElementById("viewReset").addEventListener("click", () => setViewSize(100));
 let resizeFrame;
 window.addEventListener("resize", () => {
