@@ -10,17 +10,21 @@
 .discord-button{display:inline-block;background:#5865f2;color:#fff;padding:12px 22px;border-radius:10px;font-weight:bold;text-decoration:none}.discord-button:hover{background:#4752c4}
 nav a,.discord-button{background:linear-gradient(100deg,#124493 0%,#08736b 52%,#068a32 100%);color:#fff;border:1px solid #85dbce66;box-shadow:0 3px 10px #0003;transition:filter .18s ease,box-shadow .18s ease}nav a:hover,.discord-button:hover{background:linear-gradient(100deg,#124493 0%,#08736b 52%,#068a32 100%);filter:brightness(1.12);box-shadow:0 4px 14px #0005}@media(prefers-reduced-motion:reduce){nav a,.discord-button{transition:none}}
 
-.screenshot-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;margin:24px 0}
+.screenshot-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));gap:18px;margin:24px 0}
 .screenshot-gallery[hidden],.screenshot-gallery figure[hidden]{display:none}
 .screenshot-gallery figure{margin:0}
 .screenshot-gallery a{display:block;border:1px solid #a1daff66;border-radius:8px;padding:8px;background:#1a202c}
 .screenshot-gallery img{display:block;width:100%;height:180px;object-fit:contain}
 .screenshot-gallery figcaption{font-size:13px;line-height:1.5;color:#c9deee;margin-top:8px}
-#screenshotPopup{max-width:95vw;max-height:95dvh;padding:16px;background:#1a202c;color:#edf2f7;border:1px solid #a1daff66;border-radius:12px}
+#screenshotPopup:not([open]){display:none}
+#screenshotPopup{width:min(900px,calc(100vw - 24px));max-width:calc(100vw - 24px);max-height:90vh;max-height:90dvh;overflow:auto;overscroll-behavior:contain;padding:16px;background:#1a202c;color:#edf2f7;border:1px solid #a1daff66;border-radius:12px}
 #screenshotPopup::backdrop{background:#000c}
-#screenshotPopup img{display:block;max-width:85vw;max-height:75dvh;object-fit:contain;margin:auto}
-#screenshotPopup button{display:block;margin:0 0 12px auto;padding:8px 14px;border:1px solid #a1daff66;border-radius:8px;background:#2d3748;color:#fff;cursor:pointer}
+#screenshotPopup img{display:block;width:auto;height:auto;max-width:100%;max-height:65vh;max-height:65dvh;object-fit:contain;margin:auto}
+#screenshotPopup button{display:block;position:sticky;top:0;min-width:44px;min-height:44px;margin:0 0 12px auto;padding:8px 14px;border:1px solid #a1daff66;border-radius:8px;background:#2d3748;color:#fff;cursor:pointer}
 #screenshotPopup p{font-size:14px;margin:12px 0 0}
+#originalScreenshot{display:inline-block;min-height:44px;padding:10px 0;font-size:14px}
+.screenshot-gallery a,#screenshotPopup button{touch-action:manipulation}
+#screenshotPopup button:focus-visible{outline:3px solid #a1daff;outline-offset:2px}
 </style>
 </head>
 <body><main>
@@ -47,9 +51,9 @@ nav a,.discord-button{background:linear-gradient(100deg,#124493 0%,#08736b 52%,#
 <p>If Discord shows a <strong>Reload Activity</strong> confirmation when you pop it out, choose <strong>Reload</strong> to continue. Reloading may reset your selected UTC offset and view size.</p>
 
 <div class="screenshot-gallery" aria-label="Desktop pop-out screenshots" hidden>
-  <figure hidden><a href="images/pop-out-button.png" aria-label="Enlarge screenshot: find the Pop Out button"><img src="images/pop-out-button.png" alt="Discord Activity view with the bottom-right Pop Out button circled." loading="lazy"></a><figcaption><strong>1. Find Pop Out.</strong><br>Click the thumbnail to open a larger image in a popup.</figcaption></figure>
-  <figure hidden><a href="images/pop-out-reload.png" aria-label="Enlarge screenshot: confirm Reload"><img src="images/pop-out-reload.png" alt="Discord Reload Activity confirmation, with an arrow pointing to Reload." loading="lazy"></a><figcaption><strong>2. Confirm if prompted.</strong><br>Click the thumbnail to open a larger image in a popup.</figcaption></figure>
-  <figure hidden><a href="images/pop-out-clock.png" aria-label="Enlarge screenshot: clock in its own window"><img src="images/pop-out-clock.png" alt="World Clock Together running in a separate desktop window over the Discord chat." loading="lazy"></a><figcaption><strong>3. Keep the clock nearby.</strong><br>Click the thumbnail to open a larger image in a popup.</figcaption></figure>
+  <figure hidden><a href="images/pop-out-button.png" aria-label="Enlarge screenshot: find the Pop Out button"><img src="images/pop-out-button.png" alt="Discord Activity view with the bottom-right Pop Out button circled." loading="lazy"></a><figcaption><strong>1. Find Pop Out.</strong><br>Tap or click the thumbnail to open a larger image in a popup.</figcaption></figure>
+  <figure hidden><a href="images/pop-out-reload.png" aria-label="Enlarge screenshot: confirm Reload"><img src="images/pop-out-reload.png" alt="Discord Reload Activity confirmation, with an arrow pointing to Reload." loading="lazy"></a><figcaption><strong>2. Confirm if prompted.</strong><br>Tap or click the thumbnail to open a larger image in a popup.</figcaption></figure>
+  <figure hidden><a href="images/pop-out-clock.png" aria-label="Enlarge screenshot: clock in its own window"><img src="images/pop-out-clock.png" alt="World Clock Together running in a separate desktop window over the Discord chat." loading="lazy"></a><figcaption><strong>3. Keep the clock nearby.</strong><br>Tap or click the thumbnail to open a larger image in a popup.</figcaption></figure>
 </div>
 
 <p>Use the clock’s <strong>− and + buttons</strong> to adjust its content size from <strong>10% to 500%</strong>. <strong>100%</strong> is the automatic fit, and <strong>Reset</strong> returns to it. Enlarged views may need scrolling.</p>
@@ -64,6 +68,7 @@ nav a,.discord-button{background:linear-gradient(100deg,#124493 0%,#08736b 52%,#
 <button type="button" id="closeScreenshot">Close ✕</button>
 <img id="largeScreenshot" alt="">
 <p id="screenshotCaption"></p>
+<a id="originalScreenshot" target="_blank" rel="noopener">Open full-size image</a>
 </dialog>
 <script>
 const gallery = document.querySelector(".screenshot-gallery");
@@ -83,18 +88,26 @@ for (const thumbnail of gallery.querySelectorAll("img")) {
 for (const link of gallery.querySelectorAll("a")) {
   link.addEventListener("click", event => {
     if (typeof popup.showModal !== "function") return;
-    event.preventDefault();
     const thumbnail = link.querySelector("img");
     const large = document.getElementById("largeScreenshot");
     large.src = link.href;
     large.alt = thumbnail.alt;
     document.getElementById("screenshotCaption").textContent = link.closest("figure").querySelector("strong").textContent;
-    popup.showModal();
+    document.getElementById("originalScreenshot").href = link.href;
+    try {
+      popup.showModal();
+      event.preventDefault();
+    } catch {
+      // Keep the image link working if this browser cannot open a dialog.
+    }
   });
 }
 document.getElementById("closeScreenshot").addEventListener("click", () => popup.close());
 popup.addEventListener("click", event => {
-  if (event.target === popup) popup.close();
+  if (event.target !== popup) return;
+  const bounds = popup.getBoundingClientRect();
+  if (event.clientX < bounds.left || event.clientX > bounds.right ||
+      event.clientY < bounds.top || event.clientY > bounds.bottom) popup.close();
 });
 </script>
 </body></html>
