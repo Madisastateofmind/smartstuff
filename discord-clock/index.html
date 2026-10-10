@@ -93,7 +93,9 @@
   .time .date { font-size: calc(12px * var(--view-scale)); }
   .timezone-note { font-size: calc(11px * var(--view-scale)); }
   select { font-size: calc(12px * var(--view-scale)); padding: calc(6px * var(--view-scale)); }
-  .view-controls { display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+  .view-controls { display:flex; flex-direction:column; align-items:center; gap:10px; margin-bottom:20px; }
+  .view-size-row { display:flex; justify-content:center; align-items:center; gap:10px; }
+  .view-controls #viewReset { min-width:31px; min-height:31px; padding:4.2px 8.4px; border-radius:5.6px; font-size:12.6px; }
   .view-controls button { min-width:44px; min-height:44px; padding:6px 12px; border:1px solid #a1daff66; border-radius:8px; background:linear-gradient(100deg,#124493,#08736b,#068a32); color:#fff; font: bold 18px Arial,sans-serif; cursor:pointer; }
   .view-controls button:disabled { opacity:.45; cursor:default; }
   .view-controls button:focus-visible { outline:3px solid #a1daff; outline-offset:3px; }
@@ -108,9 +110,11 @@
 
 <div class="container">
   <div class="view-controls" role="group" aria-label="Clock view size relative to automatic fit">
+    <div class="view-size-row">
     <button type="button" id="viewSmaller" aria-label="Make clock view smaller">−</button>
     <output id="viewPercent" aria-live="polite" aria-label="Clock view size relative to automatic fit" title="100% automatically fits the window; − and + adjust that size">100%</output>
     <button type="button" id="viewLarger" aria-label="Make clock view larger">+</button>
+    </div>
     <button type="button" id="viewReset" aria-label="Reset clock view to automatic fit at 100 percent">Reset</button>
   </div>
   <h1>⏰ Live Time Comparison</h1>
