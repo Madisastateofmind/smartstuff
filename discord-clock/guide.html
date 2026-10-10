@@ -48,6 +48,14 @@ nav a,.discord-button{background:linear-gradient(100deg,#124493 0%,#08736b 52%,#
 <p>Only people connected to the voice channel hear the ticking. <strong>You do not need to have the clock Activity open to hear it.</strong></p>
 <p>When you hang up, you stop hearing it. The bot’s saved playlist remains set to <strong>24/7 mode</strong>, so your computer does not need to stay on.</p>
 <p>Run <code>/stop</code> to stop playback for everyone and make the bot leave the call.</p>
+<h3>Start ticking again after /stop</h3>
+<ol>
+<li><strong>Join the clock’s voice channel again.</strong></li>
+<li>In your bot-command text channel, run <code>/play-24-7</code> and select your saved ticking playlist, such as <strong>Clock ticking</strong> or <strong>Clock ticking cleaned</strong>.</li>
+</ol>
+<p><strong>You do not need to redo the original setup.</strong> This command loads the saved playlist, repeats it, and enables 24/7 mode again. There is no need to run <code>/loop</code> or <code>/playlist save</code> again unless you are replacing the recording or rebuilding a deleted playlist.</p>
+<p>Playlists belong to the Discord account that saved them. If yours does not appear, use <code>/playlist list</code> on that same account to check its name.</p>
+<p>For a temporary pause while the bot is still connected, use <code>/pause</code>, then <code>/resume</code>. After <code>/stop</code>, use the saved-playlist restart steps above. A normal <code>/play</code> of the audio link alone does not set up a new 24/7 playlist loop.</p>
 <p class="note"><strong>The clock Activity and ticking bot can run together in the same server voice channel.</strong> These voice-bot instructions are for servers, not DM calls. Noxyr is an independent service; its commands and availability may change. See <a href="https://noxyrbot.com/docs/music">Noxyr’s music guide</a> for current help.</p>
 <h2 id="help">Need a hand?</h2>
 <p>For questions, setup help, or feedback, <a href="https://discord.gg/mjqpkPQP8N">join the Madworld support server on Discord</a>.</p>
