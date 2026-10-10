@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Launch World Clock Together in Discord and set up optional gentle ticking in your server.">
+<title>Getting started · World Clock Together</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#1a202c;color:#edf2f7;font:18px/1.7 Arial,sans-serif}main{max-width:900px;margin:40px auto;padding:40px;background:#2d3748;border-radius:16px;box-shadow:0 8px 30px #0004}h1{font-size:clamp(32px,6vw,48px);line-height:1.15;margin:0 0 18px}h2{font-size:clamp(25px,4vw,32px);line-height:1.3;color:#a1daff;margin:42px 0 16px}h3{font-size:23px;line-height:1.4;margin:28px 0 12px}a{color:#a1daff;text-underline-offset:4px}li{padding-left:5px;margin-bottom:14px}ol{padding-left:26px}.intro{font-size:21px;color:#c9deee}.note{background:#1a202c;border-left:4px solid #a1daff;padding:16px 20px;border-radius:6px}.audio-link{display:block;overflow-wrap:anywhere;background:#1a202c;padding:16px;border-radius:8px;font-size:16px}code{background:#1a202c;padding:2px 6px;border-radius:4px}footer{border-top:1px solid #edf2f730;margin-top:40px;padding-top:22px;font-size:15px}nav{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}nav a{display:inline-block;background:#1a202c;border:1px solid #a1daff55;border-radius:8px;padding:9px 15px;text-decoration:none}a:focus-visible{outline:3px solid #a1daff;outline-offset:4px}@media(max-width:600px){main{margin:12px;padding:24px 20px}body{font-size:17px}}
+.discord-button{display:inline-block;background:#5865f2;color:#fff;padding:12px 22px;border-radius:10px;font-weight:bold;text-decoration:none}.discord-button:hover{background:#4752c4}
+nav a,.discord-button{background:linear-gradient(100deg,#124493 0%,#08736b 52%,#068a32 100%);color:#fff;border:1px solid #85dbce66;box-shadow:0 3px 10px #0003;transition:filter .18s ease,box-shadow .18s ease}nav a:hover,.discord-button:hover{background:linear-gradient(100deg,#124493 0%,#08736b 52%,#068a32 100%);filter:brightness(1.12);box-shadow:0 4px 14px #0005}@media(prefers-reduced-motion:reduce){nav a,.discord-button{transition:none}}
+</style>
+</head>
+<body><main>
+<h1>⏰ World Clock Together</h1>
+<p class="intro">A free world clock to help friends compare times across time zones.</p>
+<nav aria-label="Guide sections"><a href="https://discord.com/discovery/applications/1558211468447449239">Add WCT to discord</a><a href="#launch">Launch the clock</a><a href="#ticking">Add gentle ticking</a><a href="#help">Get help</a></nav>
+<h2 id="launch">Launch the clock in a call</h2>
+<ol>
+<li>Open <a href="https://discord.com/discovery/applications/1558211468447449239">World Clock Together’s Discord app listing</a> and follow the prompts to add the app. The listing becomes available once Discord Discovery is enabled.</li>
+<li><strong>Join a server voice channel</strong>, or start a <strong>DM or group DM call</strong>.</li>
+<li>While connected to the call, click or tap the <strong>Activities</strong> button.</li>
+<li>Find <strong>World Clock Together</strong> and select <strong>Launch</strong>.</li>
+<li>Have your friends join the Activity, then use the <strong>timezone dropdown</strong> to compare times!</li>
+</ol>
+<p class="note">The dropdown uses fixed UTC offsets. Those selections do not automatically adjust for daylight saving time. The named London, Eastern and Pacific clocks adjust using your browser’s time-zone data.</p>
+<h2 id="ticking">🔊 Optional gentle clock ticking</h2>
+<p>Ticking audio comes from a <strong>separate voice bot</strong>. Installing the clock Activity does not automatically add ticking to your server.</p>
+<p>To silence ticking just for yourself, <strong>mute Noxyr</strong> or lower its user volume.</p>
+<h3>Set up ticking in your own server</h3>
+<ol>
+<li>Add <a href="https://noxyrbot.com">Noxyr</a> to your server.</li>
+<li>For this setup, allow <strong>View Channels, Send Messages, Embed Links, Connect, and Speak</strong> in the relevant channels. You do not need to grant Administrator or moderation permissions.</li>
+<li>Create a text channel such as <strong>bot-testing</strong> where you can write commands. <strong>This channel can be private.</strong></li>
+<li>If it is private, add Noxyr’s account or role to the channel’s permissions. Allow <strong>View Channel, Send Messages, and Embed Links</strong>. You can also allow <strong>Read Message History</strong> so it can read earlier messages; that permission alone is not required to reply to a new slash command.</li>
+<li>Create or choose a voice channel for the clock, such as <strong>World Clock Together</strong>.</li>
+<li>On desktop, right-click that voice channel and choose <strong>Edit Channel → Permissions</strong>. On mobile, open the channel’s settings. Add Noxyr’s account or role and allow <strong>View Channel, Connect, and Speak</strong>.</li>
+<li><strong>Join the voice channel you just set up.</strong> Stay connected while you configure playback so Noxyr knows which voice channel to join.</li>
+<li>While still connected to voice, open your <strong>bot-testing</strong> text channel. Run <code>/play</code> and enter this audio link:
+<a class="audio-link" href="../wallclock.wav">https://madisastateofmind.github.io/smartstuff/discord-clock/wallclock.wav</a></li>
+<li>While the recording is playing, run <code>/loop</code> and choose the option to repeat the current track. <strong>Do this quickly—the audio is only about four seconds long!</strong> If it ends before you finish, run <code>/play</code> again and retry.</li>
+<li>Once it is looping, run <code>/playlist save</code> and name the playlist <strong>Clock ticking</strong>.</li>
+<li>Run <code>/play-24-7</code> and select the saved <strong>Clock ticking</strong> playlist. This sets the playlist to repeat in 24/7 mode.</li>
+<li>Use <code>/volume</code> to set a gentle listening level. <em>25% is a starting point—adjust it to suit your ears.</em></li>
+<li>In the same voice call, open <strong>Activities → World Clock Together → Launch</strong> to show the clocks alongside the ticking.</li>
+</ol>
+<h3>Listening and stopping</h3>
+<p>Only people connected to the voice channel hear the ticking. <strong>You do not need to have the clock Activity open to hear it.</strong></p>
+<p>When you hang up, you stop hearing it. The bot’s saved playlist remains set to <strong>24/7 mode</strong>, so your computer does not need to stay on.</p>
+<p>Run <code>/stop</code> to stop playback for everyone and make the bot leave the call.</p>
+<h3>Start ticking again after /stop</h3>
+<ol>
+<li><strong>Join the clock’s voice channel again.</strong></li>
+<li>In your bot-command text channel, run <code>/play-24-7</code> and select your saved ticking playlist, such as <strong>Clock ticking</strong> or <strong>Clock</strong>, or whatever you chose to name your playlist.</li>
+</ol>
+<p><strong>You do not need to redo the original setup.</strong> This command loads the saved playlist, repeats it, and enables 24/7 mode again. There is no need to run <code>/loop</code> or <code>/playlist save</code> again unless you are replacing the recording or rebuilding a deleted playlist.</p>
+<p>Playlists belong to the Discord account that saved them. If yours does not appear, use <code>/playlist list</code> on that same account to check its name.</p>
+<p>For a temporary pause while the bot is still connected, use <code>/pause</code>, then <code>/resume</code>. After <code>/stop</code>, use the saved-playlist restart steps above. A normal <code>/play</code> of the audio link alone does not set up a new 24/7 playlist loop.</p>
+<p class="note"><strong>The clock Activity and ticking bot can run together in the same server voice channel.</strong> These voice-bot instructions are for servers, not DM calls. Noxyr is an independent service; its commands and availability may change. See <a href="https://noxyrbot.com/docs/music">Noxyr’s music guide</a> for current help.</p>
+<h2 id="help">Need a hand?</h2>
+<p>For questions, setup help, or feedback, <a href="https://discord.gg/mjqpkPQP8N">join the Madworld support server on Discord</a>.</p>
+<p>You can <a href="https://discord.com/users/144178216423260162">contact me on Discord</a>. Profile links and direct messages may not work if we are not friends or do not share a server. You can try a friend request to <strong>madhatter1295</strong>, or <a href="https://github.com/Madisastateofmind/smartstuff/issues">report an issue on GitHub</a>. Please do not post sensitive information in public issues.</p>
+<footer><a href="../index.html">Open the web clock</a> · <a href="../../index.html">Smart Stuff index</a> · <a href="../privacy.html">Privacy Policy</a> · <a href="../terms.html">Terms of Service</a></footer>
+</main></body></html>
