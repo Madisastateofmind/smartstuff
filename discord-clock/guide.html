@@ -28,16 +28,19 @@
 <h3>Set up ticking in your own server</h3>
 <ol>
 <li>Add <a href="https://noxyrbot.com">Noxyr</a> to your server.</li>
-<li>Give it <strong>View Channels, Send Messages, Embed Links, Connect, and Speak</strong> permissions in the relevant channels.</li>
-<li>Choose a text channel for bot commands. It can be private, but <strong>Noxyr must have permission to view it and send messages there</strong>.</li>
-<li>Choose or create a voice channel for the clock. In that channel’s permissions, allow Noxyr to <strong>View Channel, Connect, and Speak</strong>.</li>
-<li><strong>Join that voice channel and stay connected during setup.</strong></li>
-<li>In your bot-command text channel, run <code>/play</code> and enter this audio link:
+<li>For this setup, allow <strong>View Channels, Send Messages, Embed Links, Connect, and Speak</strong> in the relevant channels. You do not need to grant Administrator or moderation permissions.</li>
+<li>Create a text channel such as <strong>bot-testing</strong> where you can write commands. <strong>This channel can be private.</strong></li>
+<li>If it is private, add Noxyr’s account or role to the channel’s permissions. Allow <strong>View Channel, Send Messages, and Embed Links</strong>. You can also allow <strong>Read Message History</strong> so it can read earlier messages; that permission alone is not required to reply to a new slash command.</li>
+<li>Create or choose a voice channel for the clock, such as <strong>World Clock Together</strong>.</li>
+<li>On desktop, right-click that voice channel and choose <strong>Edit Channel → Permissions</strong>. On mobile, open the channel’s settings. Add Noxyr’s account or role and allow <strong>View Channel, Connect, and Speak</strong>.</li>
+<li><strong>Join the voice channel you just set up.</strong> Stay connected while you configure playback so Noxyr knows which voice channel to join.</li>
+<li>While still connected to voice, open your <strong>bot-testing</strong> text channel. Run <code>/play</code> and enter this audio link:
 <a class="audio-link" href="wallclock.wav">https://madisastateofmind.github.io/smartstuff/discord-clock/wallclock.wav</a></li>
-<li>While the recording is playing, run <code>/loop</code> and choose the option to repeat the current track. <strong>Be quick—the recording is only about four seconds long!</strong> If it finishes first, run <code>/play</code> again.</li>
-<li>While it is looping, run <code>/playlist save</code> and name the playlist <strong>Clock ticking</strong>.</li>
-<li>Run <code>/play-24-7</code> and select <strong>Clock ticking</strong>.</li>
-<li>Use <code>/volume</code> to choose a comfortable level. <em>Try 25% and adjust to taste.</em></li>
+<li>While the recording is playing, run <code>/loop</code> and choose the option to repeat the current track. <strong>Do this quickly—the audio is only about four seconds long!</strong> If it ends before you finish, run <code>/play</code> again and retry.</li>
+<li>Once it is looping, run <code>/playlist save</code> and name the playlist <strong>Clock ticking</strong>.</li>
+<li>Run <code>/play-24-7</code> and select the saved <strong>Clock ticking</strong> playlist. This sets the playlist to repeat in 24/7 mode.</li>
+<li>Use <code>/volume</code> to set a gentle listening level. <em>25% is a starting point—adjust it to suit your ears.</em></li>
+<li>In the same voice call, open <strong>Activities → World Clock Together → Launch</strong> to show the clocks alongside the ticking.</li>
 </ol>
 <h3>Listening and stopping</h3>
 <p>Only people connected to the voice channel hear the ticking. <strong>You do not need to have the clock Activity open to hear it.</strong></p>
