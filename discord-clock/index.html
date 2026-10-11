@@ -106,6 +106,16 @@
     .container { padding:calc(24px * var(--view-scale)) calc(16px * var(--view-scale)); }
   }
 
+
+  .timezone-picker { display:block; width:100%; max-width:100%; margin:5px auto 10px; padding:8px 10px; border:1px solid #a1daff66; border-radius:6px; background:#1a202c; color:#d9edff; font:inherit; font-size:clamp(12px,calc(12px * var(--view-scale)),24px); text-align:left; cursor:pointer; }
+  .timezone-picker::after { content:" ▾"; float:right; }
+  .timezone-picker:focus-visible,.timezone-menu:focus-visible { outline:2px solid #a1daff; outline-offset:2px; }
+  .timezone-menu { position:fixed; z-index:100; box-sizing:border-box; margin:0; padding:6px; overflow-y:auto; overscroll-behavior:contain; border:1px solid #a1daff66; border-radius:8px; background:#1a202c; color:#d9edff; box-shadow:0 8px 24px #0008; color-scheme:dark; scrollbar-color:#52647c #1a202c; }
+  .timezone-menu[hidden],select[hidden] { display:none; }
+  .timezone-menu [role="option"] { box-sizing:border-box; padding:10px; min-height:44px; border-radius:4px; font-size:clamp(14px,calc(12px * var(--view-scale)),24px); line-height:1.4; cursor:pointer; overflow-wrap:anywhere; }
+  .timezone-menu [aria-selected="true"] { font-weight:bold; }
+  .timezone-menu [aria-selected="true"]::before { content:"✓ "; }
+  .timezone-menu .active,.timezone-menu [role="option"]:hover { background:#2d3748; color:#d9edff; }
 </style>
 </head>
 <body>
@@ -261,6 +271,122 @@ function updateClocks() {
 }
 
 document.getElementById("timeZoneSelect").value = "0";
+
+function createTimezonePicker() {
+  const select = document.getElementById("timeZoneSelect");
+  const label = document.querySelector('label[for="timeZoneSelect"]');
+  label.id = "timezoneLabel";
+  const trigger = document.createElement("button");
+  trigger.type = "button";
+  trigger.id = "timezonePicker";
+  trigger.className = "timezone-picker";
+  trigger.setAttribute("aria-haspopup", "listbox");
+  trigger.setAttribute("aria-expanded", "false");
+  trigger.setAttribute("aria-controls", "timezoneMenu");
+  trigger.setAttribute("aria-labelledby", "timezoneLabel timezonePicker");
+  const menu = document.createElement("div");
+  menu.id = "timezoneMenu";
+  menu.className = "timezone-menu";
+  menu.setAttribute("role", "listbox");
+  menu.setAttribute("aria-labelledby", "timezoneLabel");
+  menu.tabIndex = -1;
+  menu.hidden = true;
+  const options = Array.from(select.options);
+  const entries = options.map((option, index) => {
+    const entry = document.createElement("div");
+    entry.id = "timezoneOption" + index;
+    entry.setAttribute("role", "option");
+    entry.textContent = option.textContent;
+    entry.addEventListener("click", () => choose(index));
+    menu.appendChild(entry);
+    return entry;
+  });
+  let activeIndex = select.selectedIndex;
+  let search = "";
+  let lastKey = 0;
+  function highlight(index) {
+    activeIndex = Math.max(0, Math.min(entries.length - 1, index));
+    entries.forEach((entry, i) => entry.classList.toggle("active", i === activeIndex));
+    menu.setAttribute("aria-activedescendant", entries[activeIndex].id);
+    entries[activeIndex].scrollIntoView({ block:"nearest" });
+  }
+  function sync() {
+    trigger.textContent = options[select.selectedIndex].textContent;
+    entries.forEach((entry, i) => entry.setAttribute("aria-selected", String(i === select.selectedIndex)));
+  }
+  function close(returnFocus = false) {
+    menu.hidden = true;
+    trigger.setAttribute("aria-expanded", "false");
+    if (returnFocus) trigger.focus();
+  }
+  function position() {
+    if (menu.hidden) return;
+    const rect = trigger.getBoundingClientRect();
+    const width = Math.min(Math.max(rect.width, 280), window.innerWidth - 16);
+    const below = window.innerHeight - rect.bottom - 8;
+    const above = rect.top - 8;
+    const useBelow = below >= Math.min(240, above);
+    const height = Math.max(44, Math.min(300, useBelow ? below : above));
+    menu.style.width = width + "px";
+    menu.style.maxHeight = height + "px";
+    menu.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - width - 8)) + "px";
+    menu.style.top = (useBelow ? rect.bottom + 4 : Math.max(8, rect.top - Math.min(menu.scrollHeight, height) - 4)) + "px";
+  }
+  function open() {
+    menu.hidden = false;
+    trigger.setAttribute("aria-expanded", "true");
+    position();
+    menu.focus();
+    highlight(select.selectedIndex);
+  }
+  function choose(index) {
+    select.selectedIndex = index;
+    sync();
+    updateClocks();
+    close(true);
+  }
+  trigger.addEventListener("click", () => menu.hidden ? open() : close(true));
+  trigger.addEventListener("keydown", event => {
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      open();
+    }
+  });
+  menu.addEventListener("keydown", event => {
+    if (event.key === "Tab") { close(true); return; }
+    if (event.key === "Escape") { event.preventDefault(); close(true); return; }
+    if (event.key === "Enter" || event.key === " ") { event.preventDefault(); choose(activeIndex); return; }
+    const movements = { ArrowDown:activeIndex + 1, ArrowUp:activeIndex - 1, Home:0, End:entries.length - 1 };
+    if (event.key in movements) { event.preventDefault(); highlight(movements[event.key]); return; }
+    if (event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
+      event.preventDefault();
+      const now = Date.now();
+      search = (now - lastKey > 700 ? "" : search) + event.key.toLowerCase();
+      lastKey = now;
+      const match = options.findIndex(option => option.textContent.toLowerCase().includes(search));
+      if (match >= 0) highlight(match);
+    }
+  });
+  document.addEventListener("pointerdown", event => {
+    if (!menu.contains(event.target) && !trigger.contains(event.target)) close();
+  });
+  document.addEventListener("focusin", event => {
+    if (!menu.contains(event.target) && !trigger.contains(event.target)) close();
+  });
+  window.addEventListener("resize", () => close());
+  window.addEventListener("scroll", event => {
+    if (!menu.contains(event.target)) close();
+  }, true);
+  select.addEventListener("change", sync);
+  select.insertAdjacentElement("afterend", trigger);
+  document.body.appendChild(menu);
+  label.htmlFor = trigger.id;
+  select.hidden = true;
+  sync();
+}
+
+createTimezonePicker();
+fitClockView();
 updateClocks();
 setInterval(updateClocks, 1000);
 </script>
