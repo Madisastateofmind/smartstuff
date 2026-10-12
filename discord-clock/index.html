@@ -123,6 +123,18 @@
   .timezone-menu-close { flex:none; align-self:flex-start; display:flex; align-items:center; justify-content:center; width:44px; height:44px; margin:0 0 4px; padding:0; border:0; border-radius:8px; background:#d9edff12; color:#d9edffb3; font:24px/1 Arial,sans-serif; cursor:pointer; touch-action:manipulation; }
   .timezone-menu-close:hover,.timezone-menu-close:active { background:#d9edff26; color:#d9edff; }
   .timezone-menu-close:focus-visible { outline:2px solid #a1daff; outline-offset:-2px; }
+
+  /* The offset picker fills the Activity viewport, including on phones. */
+  .timezone-menu {
+    inset:0;
+    width:100%;
+    height:100%;
+    max-height:none;
+    border:0;
+    border-radius:0;
+    padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+  }
+  .timezone-options { flex:1; }
 </style>
 </head>
 <body>
@@ -337,23 +349,9 @@ function createTimezonePicker() {
     trigger.setAttribute("aria-expanded", "false");
     if (returnFocus) trigger.focus();
   }
-  function position() {
-    if (menu.hidden) return;
-    const rect = trigger.getBoundingClientRect();
-    const width = Math.min(Math.max(rect.width, 280), window.innerWidth - 16);
-    const below = window.innerHeight - rect.bottom - 8;
-    const above = rect.top - 8;
-    const useBelow = below >= Math.min(240, above);
-    const height = Math.max(100, Math.min(300, useBelow ? below : above));
-    menu.style.width = width + "px";
-    menu.style.maxHeight = height + "px";
-    menu.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - width - 8)) + "px";
-    menu.style.top = (useBelow ? rect.bottom + 4 : Math.max(8, rect.top - Math.min(menu.offsetHeight, height) - 4)) + "px";
-  }
   function open() {
     menu.hidden = false;
     trigger.setAttribute("aria-expanded", "true");
-    position();
     list.focus();
     highlight(select.selectedIndex);
   }
