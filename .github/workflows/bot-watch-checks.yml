@@ -1,0 +1,21 @@
+name: Bot Watch checks
+on:
+  push:
+    branches: [bot-watch-setup]
+    paths: ["bot-watch/**", "discord-clock/usage.js", ".github/workflows/bot-watch-checks.yml"]
+  pull_request:
+    paths: ["bot-watch/**", "discord-clock/usage.js", ".github/workflows/bot-watch-checks.yml"]
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: node --test worker.test.mjs
+        working-directory: bot-watch
+      - run: python3 schema.test.py
+        working-directory: bot-watch
