@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Add World Clock Together to Discord and launch it from a text channel or a call.">
+<title>Getting started · World Clock Together</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#1a202c;color:#edf2f7;font:18px/1.7 Arial,sans-serif}main{max-width:900px;margin:40px auto;padding:40px;background:#2d3748;border-radius:16px;box-shadow:0 8px 30px #0004}h1{font-size:clamp(32px,6vw,48px);line-height:1.15;margin:0 0 18px}h2{font-size:clamp(25px,4vw,32px);line-height:1.3;color:#a1daff;margin:42px 0 16px}h3{font-size:23px;line-height:1.4;margin:28px 0 12px}a{color:#a1daff;text-underline-offset:4px}li{padding-left:5px;margin-bottom:14px}ol{padding-left:26px}.intro{font-size:21px;color:#c9deee}.note{background:#1a202c;border-left:4px solid #a1daff;padding:16px 20px;border-radius:6px}code{background:#1a202c;padding:2px 6px;border-radius:4px}footer{border-top:1px solid #edf2f730;margin-top:40px;padding-top:22px;font-size:15px}nav{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}nav a{display:inline-block;background:#1a202c;border:1px solid #a1daff55;border-radius:8px;padding:9px 15px;text-decoration:none}a:focus-visible{outline:3px solid #a1daff;outline-offset:4px}@media(max-width:600px){main{margin:12px;padding:24px 20px}body{font-size:17px}}
+.discord-button{display:inline-block;background:#5865f2;color:#fff;padding:12px 22px;border-radius:10px;font-weight:bold;text-decoration:none}.discord-button:hover{background:#4752c4}
+nav a,.discord-button{background:linear-gradient(100deg,#124493 0%,#08736b 52%,#068a32 100%);color:#fff;border:1px solid #85dbce66;box-shadow:0 3px 10px #0003;transition:filter .18s ease,box-shadow .18s ease}nav a:hover,.discord-button:hover{background:linear-gradient(100deg,#124493 0%,#08736b 52%,#068a32 100%);filter:brightness(1.12);box-shadow:0 4px 14px #0005}@media(prefers-reduced-motion:reduce){nav a,.discord-button{transition:none}}
+
+.screenshot-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));gap:18px;margin:24px 0}
+.screenshot-gallery[hidden],.screenshot-gallery figure[hidden]{display:none}
+.screenshot-gallery figure{margin:0}
+.screenshot-gallery a{display:block;border:1px solid #a1daff66;border-radius:8px;padding:8px;background:#1a202c}
+.screenshot-gallery img{display:block;width:100%;height:180px;object-fit:contain}
+.screenshot-gallery figcaption{font-size:13px;line-height:1.5;color:#c9deee;margin-top:8px}
+#screenshotPopup:not([open]){display:none}
+#screenshotPopup{width:min(900px,calc(100vw - 24px));max-width:calc(100vw - 24px);max-height:90vh;max-height:90dvh;overflow:auto;overscroll-behavior:contain;padding:16px;background:#1a202c;color:#edf2f7;border:1px solid #a1daff66;border-radius:12px}
+#screenshotPopup::backdrop{background:#000c}
+#screenshotPopup img{display:block;width:auto;height:auto;max-width:100%;max-height:65vh;max-height:65dvh;object-fit:contain;margin:auto}
+#screenshotPopup button{display:block;position:sticky;top:0;min-width:44px;min-height:44px;margin:0 0 12px auto;padding:8px 14px;border:1px solid #a1daff66;border-radius:8px;background:#2d3748;color:#fff;cursor:pointer}
+#screenshotPopup p{font-size:14px;margin:12px 0 0}
+#originalScreenshot{display:inline-block;min-height:44px;padding:10px 0;font-size:14px}
+.screenshot-gallery a,#screenshotPopup button{touch-action:manipulation}
+#screenshotPopup button:focus-visible{outline:3px solid #a1daff;outline-offset:2px}
+
+/* Raised controls sink inward when clicked, tapped, or keyboard-pressed. */
+nav a,.discord-button,#screenshotPopup button,.screenshot-gallery a {
+  box-shadow:inset 0 1px 0 #ffffff55,inset 0 -2px 0 #0005,0 3px 5px #0004;
+  transition:box-shadow .1s ease,transform .1s ease,filter .1s ease;
+  touch-action:manipulation;
+}
+nav a:active,.discord-button:active,#screenshotPopup button:active,.screenshot-gallery a:active {
+  transform:translateY(2px);
+  filter:brightness(.88);
+  box-shadow:inset 0 3px 6px #0008,inset 0 -1px 0 #ffffff33,0 1px 2px #0003;
+}
+@media(prefers-reduced-motion:reduce) {
+  nav a,.discord-button,#screenshotPopup button,.screenshot-gallery a{transition:none}
+}
+footer{text-align:center}footer .web-clock-link{margin:0 0 16px}footer .web-clock-link small{color:#c9deee;font-size:13px}footer .footer-links{margin:0}
+.guide-header{text-align:center}.guide-header nav{justify-content:center}
+</style>
+</head>
+<body><main>
+<header class="guide-header">
+<h1>⏰ World Clock Together</h1>
+<p class="intro">A free world clock to help friends compare times across time zones.</p>
+<nav aria-label="Guide sections"><a href="https://discord.com/discovery/applications/1558211468447449239">Add WCT to discord</a><a href="#launch">Launch the clock</a><a href="#help">Get help</a></nav>
+</header>
+<h2 id="launch">Set up and launch the clock</h2>
+<ol>
+<li>Open <a href="https://discord.com/discovery/applications/1558211468447449239">World Clock Together’s Discord app listing</a> and follow the prompts to add the app. If you are adding it to a server, choose the server where you want to use the clock and complete Discord’s prompts.
+<p class="note">If the link opens Discord in your browser, sign in there to add the app. Then return to the Discord desktop or mobile app to launch it.</p></li>
+<li>Open the <strong>text channel where you want people to find and launch the clock</strong>. Create a dedicated channel such as <strong>world-clock</strong>, or choose an existing one. Launch it here, rather than in a separate bot-testing channel. <strong>A voice call is not required.</strong></li>
+<li>Open Discord’s <strong>App Launcher</strong> in the channel, find <strong>World Clock Together</strong>, and choose <strong>Launch</strong>. If Discord offers the app’s <strong>Launch</strong> command while you type <code>/</code>, you can select that instead.</li>
+<li>Discord opens the live clock in its Activity view. Use the <strong>timezone dropdown</strong> to compare times with your local time. When you browse elsewhere, Discord may show the clock in a floating window.</li>
+<li>Discord posts an <strong>Activity invitation card in the channel you launched from</strong>. Friends can use that card to join. Pin the card if you want to make it easier to find.</li>
+</ol>
+<p class="note"><strong>Add the app once; launch it in your chosen channel.</strong> Discord installs apps to a server or your account, rather than to an individual channel. Launching WCT from your chosen channel puts its invitation card there. To put a card in another channel, launch WCT from that channel too.</p>
+<p class="note">The dropdown uses fixed UTC offsets. Those selections do not automatically adjust for daylight saving time. The named London, Eastern and Pacific clocks adjust using your browser’s time-zone data.</p>
+<h3>Open it again later</h3>
+<p>The app remains installed when an Activity session ends. Launch it again through the App Launcher, or use <strong>Play</strong> on its invitation card if Discord offers it. You do not need to install the app again.</p>
+<h3>Keep the clock visible on desktop</h3>
+<p>After launching the clock, use Discord’s <strong>Pop Out</strong> option in the Activity view to keep it in a separate floating window while you browse other channels. Resize the window to suit you; the clock automatically adjusts to the available space.</p>
+<p>If Discord shows a <strong>Reload Activity</strong> confirmation when you pop it out, choose <strong>Reload</strong> to continue. Reloading may reset your selected UTC offset and view size.</p>
+
+<div class="screenshot-gallery" aria-label="Desktop pop-out screenshots" hidden>
+  <figure hidden><a href="images/pop-out-button.png" aria-label="Enlarge screenshot: find the Pop Out button"><img src="images/pop-out-button.png" alt="Discord Activity view with the bottom-right Pop Out button circled." loading="lazy"></a><figcaption><strong>1. Find Pop Out.</strong><br>Tap or click the thumbnail to open a larger image in a popup.</figcaption></figure>
+  <figure hidden><a href="images/pop-out-reload.png" aria-label="Enlarge screenshot: confirm Reload"><img src="images/pop-out-reload.png" alt="Discord Reload Activity confirmation, with an arrow pointing to Reload." loading="lazy"></a><figcaption><strong>2. Confirm if prompted.</strong><br>Tap or click the thumbnail to open a larger image in a popup.</figcaption></figure>
+  <figure hidden><a href="images/pop-out-clock.png" aria-label="Enlarge screenshot: clock in its own window"><img src="images/pop-out-clock.png" alt="World Clock Together running in a separate desktop window over the Discord chat." loading="lazy"></a><figcaption><strong>3. Keep the clock nearby.</strong><br>Tap or click the thumbnail to open a larger image in a popup.</figcaption></figure>
+</div>
+
+<p>Use the clock’s <strong>− and + buttons</strong> to adjust its content size from <strong>10% to 500%</strong>. <strong>100%</strong> is the automatic fit, and <strong>Reset</strong> returns to it. Enlarged views may need scrolling.</p>
+<p class="note"><strong>Desktop tip:</strong> This pop-out option has been tested on computer. Mobile availability and behaviour are still being checked.</p>
+<p>The floating window keeps an open Activity handy; it does not make the clock a permanently running participant in a channel. If the session ends, launch the clock again.</p>
+<h2 id="help">Need a hand?</h2>
+<p>For questions, setup help, or feedback, <a href="https://discord.gg/mjqpkPQP8N">join the Madworld support server on Discord</a>.</p>
+<p>You can <a href="https://discord.com/users/144178216423260162">contact me on Discord</a>. Profile links and direct messages may not work if we are not friends or do not share a server. You can try a friend request to <strong>madhatter1295</strong>, or <a href="https://github.com/Madisastateofmind/smartstuff/issues">report an issue on GitHub</a>. Please do not post sensitive information in public issues.</p>
+<footer><p class="web-clock-link"><a href="index.html">Use WCT in your browser</a><br><small>No Discord or installation needed.</small></p><p class="footer-links"><a href="../index.html">Smart Stuff index</a> · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a></p></footer>
+</main>
+<dialog id="screenshotPopup" aria-label="Enlarged guide screenshot">
+<button type="button" id="closeScreenshot">Close ✕</button>
+<img id="largeScreenshot" alt="">
+<p id="screenshotCaption"></p>
+<a id="originalScreenshot" target="_blank" rel="noopener">Open full-size image</a>
+</dialog>
+<script>
+const gallery = document.querySelector(".screenshot-gallery");
+const popup = document.getElementById("screenshotPopup");
+for (const thumbnail of gallery.querySelectorAll("img")) {
+  const reveal = () => {
+    if (thumbnail.naturalWidth > 0) {
+      thumbnail.closest("figure").hidden = false;
+      gallery.hidden = false;
+    }
+  };
+  thumbnail.addEventListener("load", reveal);
+  // Load even while the gallery is hidden.
+  thumbnail.loading = "eager";
+  if (thumbnail.complete) reveal();
+}
+for (const link of gallery.querySelectorAll("a")) {
+  link.addEventListener("click", event => {
+    if (typeof popup.showModal !== "function") return;
+    const thumbnail = link.querySelector("img");
+    const large = document.getElementById("largeScreenshot");
+    large.src = link.href;
+    large.alt = thumbnail.alt;
+    document.getElementById("screenshotCaption").textContent = link.closest("figure").querySelector("strong").textContent;
+    document.getElementById("originalScreenshot").href = link.href;
+    try {
+      popup.showModal();
+      event.preventDefault();
+    } catch {
+      // Keep the image link working if this browser cannot open a dialog.
+    }
+  });
+}
+document.getElementById("closeScreenshot").addEventListener("click", () => popup.close());
+popup.addEventListener("click", event => {
+  if (event.target !== popup) return;
+  const bounds = popup.getBoundingClientRect();
+  if (event.clientX < bounds.left || event.clientX > bounds.right ||
+      event.clientY < bounds.top || event.clientY > bounds.bottom) popup.close();
+});
+</script>
+</body></html>
