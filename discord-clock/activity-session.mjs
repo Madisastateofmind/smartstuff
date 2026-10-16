@@ -1,5 +1,5 @@
 // Discord owns the native audio session. CLOSE requests Activity shutdown;
-// it does not confirm that Android has released audio focus.
+// it does not confirm that Android/iOS has released its native audio session.
 export function manageActivitySession(sdk, { document, window, onCloseRequested, onCloseError }) {
   let closing = false;
   const mobile = sdk.platform === "mobile";
