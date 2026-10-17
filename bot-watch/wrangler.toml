@@ -1,0 +1,22 @@
+name = "bot-watch"
+main = "worker.js"
+compatibility_date = "2026-10-14"
+workers_dev = true
+
+[observability]
+enabled = false
+
+[vars]
+OWNER_GITHUB_ID = "253505737"
+GITHUB_CLIENT_ID = "REPLACE_WITH_OAUTH_CLIENT_ID"
+APPS_JSON = '{"wct":"World Clock Together"}'
+ALLOWED_ORIGINS = "https://madisastateofmind.github.io,https://1558211468447449239.discordsays.com"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "bot-watch"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[triggers]
+crons = ["0 * * * *"]
+# Set GITHUB_CLIENT_SECRET and SESSION_SECRET through Worker secrets, never in this file.
