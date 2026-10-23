@@ -135,11 +135,6 @@
     padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
   }
   .timezone-options { flex:1; }
-  #activityControls[hidden], #mobileExitNote[hidden] { display:none; }
-  #activityControls { margin-top:12px; }
-  #leaveActivity { min-height:44px; padding:8px 16px; border:1px solid #a1daff66; border-radius:8px; background:#1a202c; color:#d9edff; font:inherit; cursor:pointer; touch-action:manipulation; }
-  #leaveActivity:focus-visible { outline:3px solid #a1daff; outline-offset:3px; }
-  #mobileExitNote, #activityStatus { font-size:12px; line-height:1.4; color:#c9deee; }
 </style>
 </head>
 <body>
@@ -208,11 +203,6 @@
   <div class="clock">
     <div class="label">🌍 Your Local Time</div>
     <div class="time" id="localTime"><span class="clock-time">Loading...</span><span class="date"></span></div>
-  </div>
-  <div id="activityControls" hidden>
-    <button type="button" id="leaveActivity">Leave WCT</button>
-    <p id="mobileExitNote" hidden>On mobile, WCT requests closure when hidden or minimized. Use Leave WCT when finished.</p>
-    <p id="activityStatus" role="status"></p>
   </div>
 </div>
 
@@ -418,6 +408,6 @@ updateClocks();
 setInterval(updateClocks, 1000);
 </script>
 
-<script type="module" src="./activity-start.mjs"></script>
+<script type="module" src="./discord-connect_v1.js"></script>
 </body>
 </html>
